@@ -1,5 +1,10 @@
+{% extends 'main/base.html' %}
 {% block content %}
-    <h1><span style="color: blue">agree</span><span style="color: green">able</span></h1>
-    <h2>contracts for everyone</h2>
-    <button id="start">Get Started</button>
+    <div class="section">
+        <h1 class="title"><span style="color: blue">agree</span><span style="color: green">able</span></h1>
+        <h2>contracts for everyone</h2>
+        <a href="{% url 'signup' %}">
+            <button id="start" class="button-primary">Get Started</button>
+        </a>
+    </div>
 {% endblock %}

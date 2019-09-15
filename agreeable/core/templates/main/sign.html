@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Sign a Contract{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+
+            $("#verify-button").click(function () {
+                const video = $("#video-preview")[0];
+                if (navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({video: true})
+                        .then(function (stream) {
+                            $("#verify-button").hide();
+                            video.srcObject = stream;
+                            $("#verify-flow").show();
+                        })
+                        .catch(function (err) {
+                            console.log("Something went wrong!");
+                        });
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h2>hello <b>{{ name }}</b></h2>
+        <h2>we have an agreement for you!</h2>
+        <div id="verify">
+            <button id="verify-button" class="button-primary">let's make sure it's you</button>
+            <div id="verify-flow" style="display: none">
+                <h2><b>show us your favorite object</b></h2>
+                <video autoplay="true" id="video-preview"></video>
+            </div>
+        </div>
+    </div>
+{% endblock %}

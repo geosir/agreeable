@@ -1,4 +1,4 @@
 AgreeAble
 =====
 
-Smart Contracts Assistant for Everyone
+Contracts for Everyone
