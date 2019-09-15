@@ -4,6 +4,7 @@ from django.db import models
 # Create your models here.
 class Document(models.Model):
     docid = models.CharField(max_length=128, primary_key=True)
+    clickwrap_id = models.CharField(max_length=128)
     signer = models.ForeignKey('Signer', on_delete=models.SET_NULL, null=True)
     terms = models.TextField()
     signed = models.BooleanField(default=False)

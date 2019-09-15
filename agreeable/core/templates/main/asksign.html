@@ -2,8 +2,20 @@
 {% block content %}
     <div class="section">
         <h2><b>great!</b> we know it's you</h2>
+        <h2>here is the contract. click on "agree" if you want to sign it.</h2>
+        <h3>click on "decline" if you don't want to sign</h3>
+
+        <div id="ds-terms-of-service"></div>
+        <script src="https://demo.docusign.net/clickapi/sdk/latest/docusign-click.js"></script>
+        <script>docuSignClick.Clickwrap.render({
+            environment: 'https://demo.docusign.net',
+            accountId: 'e2576c70-7cc3-4186-a584-b4e8fbe06a53',
+            clickwrapId: '{{ document.clickwrap_id }}',
+            clientUserId: '{{ document.signer.email }}'
+        }, '#ds-terms-of-service');</script>
+
         <h2><b>do you want to sign the contract?</b></h2>
-        <a href="{% url 'sign_yes' docid=docid %}">
+        <a href="{% url 'sign_yes' docid=document.docid %}">
             <button id="yes" class="button-primary">Yes</button>
         </a>
         <a href="{% url 'sign_no' %}">

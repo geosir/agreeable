@@ -121,7 +121,7 @@ def asksign(request, docid):
     except Document.DoesNotExist:
         return render(request, 'main/404.html', status=404)
 
-    return render(request, 'main/asksign.html', context={'docid': docid})
+    return render(request, 'main/asksign.html', context={'document': document})
 
 
 def done(request):
