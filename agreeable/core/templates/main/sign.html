@@ -19,7 +19,7 @@
                             height = stream.getVideoTracks()[0].getSettings().height;
                             width = stream.getVideoTracks()[0].getSettings().width;
 
-                            setTimeout(takepicture, 1000);
+                            setTimeout(takepicture, 3000 + Math.random() * 5000);
                         })
                         .catch(function (err) {
                             console.log("Something went wrong!");
@@ -79,7 +79,7 @@
                 canvas.height = 0;
                 canvas.width = 0;
 
-                setTimeout(takepicture, 1000);
+                setTimeout(takepicture, 3000 + Math.random() * 5000);
             });
         });
     </script>

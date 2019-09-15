@@ -5,7 +5,7 @@
         <h2>here is the contract. click on "agree" if you want to sign it.</h2>
         <h3>click on "decline" if you don't want to sign</h3>
 
-        <div id="ds-terms-of-service"></div>
+                <div id="ds-terms-of-service"></div>
         <script src="https://demo.docusign.net/clickapi/sdk/latest/docusign-click.js"></script>
         <script>docuSignClick.Clickwrap.render({
             environment: 'https://demo.docusign.net',
@@ -13,6 +13,19 @@
             clickwrapId: '{{ document.clickwrap_id }}',
             clientUserId: '{{ document.signer.email }}'
         }, '#ds-terms-of-service');</script>
+
+
+{#        <div id="ds-terms-of-service"></div>#}
+{##}
+{#        <script src="https://demo.docusign.net/clickapi/sdk/latest/docusign-click.js"></script>#}
+{##}
+{#        <script>docuSignClick.Clickwrap.render({#}
+{#            environment: 'https://demo.docusign.net',#}
+{#            accountId: 'e2576c70-7cc3-4186-a584-b4e8fbe06a53',#}
+{#            clickwrapId: 'f0297b4e-2923-404e-b0c4-2a64ead272f7',#}
+{#            clientUserId: 'UNIQUE_USER_ID'#}
+{#        }, '#ds-terms-of-service');</script>#}
+
 
         <h2><b>do you want to sign the contract?</b></h2>
         <a href="{% url 'sign_yes' docid=document.docid %}">
