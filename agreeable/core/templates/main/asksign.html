@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <div class="section">
+        <h2><b>great!</b> we know it's you</h2>
+        <h2><b>do you want to sign the contract?</b></h2>
+        <a href="{% url 'sign_yes' docid=docid %}">
+            <button id="yes" class="button-primary">Yes</button>
+        </a>
+        <a href="{% url 'sign_no' %}">
+            <button id="no" class="button-danger">No</button>
+        </a>
+    </div>
+{% endblock %}

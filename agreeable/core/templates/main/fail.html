@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Not Found{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h2><b>oh no!</b> something went wrong.</h2>
+        <a href="{% url 'index' %}">
+            <button id="return" class="button-primary">go home</button>
+        </a>
+        <button id="help" class="button-warning">get help</button>
+    </div>
+{% endblock %}

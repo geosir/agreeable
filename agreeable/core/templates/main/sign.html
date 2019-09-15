@@ -6,19 +6,80 @@
     <script>
         $(document).ready(function () {
 
+            var height, width;
+            const video = $("#video-preview")[0];
             $("#verify-button").click(function () {
-                const video = $("#video-preview")[0];
                 if (navigator.mediaDevices.getUserMedia) {
                     navigator.mediaDevices.getUserMedia({video: true})
                         .then(function (stream) {
                             $("#verify-button").hide();
                             video.srcObject = stream;
                             $("#verify-flow").show();
+
+                            height = stream.getVideoTracks()[0].getSettings().height;
+                            width = stream.getVideoTracks()[0].getSettings().width;
+
+                            setTimeout(takepicture, 1000);
                         })
                         .catch(function (err) {
                             console.log("Something went wrong!");
                         });
                 }
+            });
+
+            const canvas = $("#photo-canvas")[0];
+
+            function takepicture() {
+                var context = canvas.getContext('2d');
+                canvas.width = width;
+                canvas.height = height;
+                context.drawImage(video, 0, 0, width, height);
+
+                $("#video-preview").hide();
+                $("#photo-canvas").css({borderColor: '#00ff00', borderWidth: 10, borderStyle: 'solid'});
+
+                $("#verify-title").html("<i>working...</i>");
+
+                var data = canvas.toDataURL('image/png');
+                console.log(data);
+
+                $.post({% url 'validate_preview' %}, {image: data}).then(function (data) {
+                    $("#verify-title").html("<b>okay!</b> here's what we got:");
+                    $("#verify-detail").text(data.top.join(', '));
+                    $("#verify-detail").show();
+                    $("#after-photo").show();
+                });
+            }
+
+            $("#finish").click(function () {
+                var data = canvas.toDataURL('image/png');
+                console.log(data);
+
+                $("#after-photo").hide();
+                $("#verify-title").html("<i>working...</i>");
+
+
+                $.post("{% url 'validate' %}", {
+                    image: data,
+                    email: "{{ email }}",
+                    docis: "{{ docid }}"
+                }).then(function () {
+                    window.location = "{% url 'asksign' docid=docid %}";
+                }).catch(function (err) {
+                    window.location = "{% url 'fail' %}";
+                });
+            });
+
+            $("#again").click(function () {
+                $("#after-photo").hide();
+                $("#verify-title").html("<b>show us your favorite object</b>");
+                $("#verify-detail").hide();
+                $("#video-preview").show();
+                $("#photo-canvas").css({borderStyle: 'none'});
+                canvas.height = 0;
+                canvas.width = 0;
+
+                setTimeout(takepicture, 1000);
             });
         });
     </script>
@@ -28,11 +89,26 @@
     <div class="section">
         <h2>hello <b>{{ name }}</b></h2>
         <h2>we have an agreement for you!</h2>
+
+        <h2><b>Summary of Terms:</b></h2>
+        <ul>
+            {% for term in terms %}
+                <li>{{ term }}</li>
+            {% endfor %}
+        </ul>
+
         <div id="verify">
-            <button id="verify-button" class="button-primary">let's make sure it's you</button>
-            <div id="verify-flow" style="display: none">
-                <h2><b>show us your favorite object</b></h2>
+            <button id="verify-button" class="button-primary">verify and sign</button>
+            <div id="verify-flow" class="form-container" style="display: none">
+                <h2>let's make sure it's you</h2>
+                <h2 id="verify-title"><b>show us your favorite object</b></h2>
+                <h3 id="verify-detail" style="display: none"></h3>
                 <video autoplay="true" id="video-preview"></video>
+                <canvas id="photo-canvas"></canvas>
+                <div id="after-photo" style="display: none">
+                    <button id="finish" class="button-primary">looks good, let's finish</button>
+                    <button id="again" class="button-secondary">i need to try again</button>
+                </div>
             </div>
         </div>
     </div>
