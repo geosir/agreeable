@@ -1,0 +1,40 @@
+.section {
+    text-align: center;
+    padding: 5%;
+}
+
+.title {
+    font-size: 10em;
+}
+
+h1 {
+    font-size: 8em;
+    margin-bottom: 5%;
+}
+
+h2 {
+    font-size: 4em;
+    margin-bottom: 5%;
+}
+
+button {
+    font-size: 4em;
+    height: auto;
+    border-width: 5px;
+    margin: 5%;
+    max-width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.5em;
+}
+
+label {
+    font-size: 4em;
+}
+
+input {
+    font-size: 4em;
+    height: auto !important;
+    padding: 2% !important;
+    margin-bottom: 5%;
+}
